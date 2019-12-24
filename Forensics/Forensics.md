@@ -809,13 +809,13 @@ if __name__ == '__main__':
 
 This pasta is up to no good. There MUST be something behind it.
 
-![ctf](./pastaAAA/ctf.png)
+![ctf](./PastaAAA/ctf.png)
 
 FLAG: `picoCTF{pa$ta_1s_lyf3}`
 
 Use the `stegsolve` tool in `pastaAAA/` to analyze the pasta image. We will see the following image when we look at the green pane.
 
-![pasta](./pastaAAA/pasta.png)
+![pasta](./PastaAAA/pasta.png)
 
 Hence, the flag should be `picoCTF{pa$ta_1s_lyf3}`.
 
