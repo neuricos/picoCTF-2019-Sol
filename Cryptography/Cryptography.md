@@ -811,4 +811,4 @@ if __name__ == '__main__':
 
 As you can see, the decrypted image is like this:
 
-![flag.ppm](./flag.png)
+![flag.png](./flag.png)
