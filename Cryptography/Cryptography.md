@@ -813,4 +813,4 @@ As you can see, the decrypted image is like this:
 
 *flag.ppm:*
 
-![flag.ppm](./flag.png)
+![flag.ppm](./aes_abc_flag.png)
