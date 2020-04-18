@@ -841,3 +841,102 @@ Finished
 Printing flag:
 PICOCTF{Good job keeping bus #1cf20c02 speeding along!}
 ```
+
+### Time's Up (400 points)
+
+Time waits for no one. Can you solve this before time runs out? times-up, located in the directory at `/problems/time-s-up_4_548d4bc5ce82bf27864a00001fcbd182`.
+
+FLAG: `picoCTF{Gotta go fast. Gotta go FAST. #046cc375}`
+
+If we directly run the program, we will see the following:
+
+```bash
+deepzero@ubuntu:~/Desktop$ ./times-up
+Challenge: (((((-854810748) + (-941288844)) + ((-1286900858) - (-998483204))) + (((-758743650) - (-1455902769)) + ((-43638189) - (-2048651958)))) + ((((-1626304089) + (1930199724)) - ((-1542888128) + (-473499864))) - (((-1596619552) + (-531550730)) + ((-722586188) + (-747081157)))))
+Setting alarm...
+Solution? Alarm clock
+```
+
+As you can see, the program generates an equation and expects you to input the answer in a blink of eye...
+
+Let's figure out how long we have to input the answer before it times out using `strace`.
+
+```bash
+deepzero@ubuntu:~/Desktop$ strace ./times-up 
+execve("./times-up", ["./times-up"], 0x7ffd755e9ce0 /* 51 vars */) = 0
+brk(NULL)                               = 0x55b155d02000
+arch_prctl(0x3001 /* ARCH_??? */, 0x7ffe363051b0) = -1 EINVAL (Invalid argument)
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=71772, ...}) = 0
+mmap(NULL, 71772, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f3033a3f000
+close(3)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\360r\2\0\0\0\0\0"..., 832) = 832
+lseek(3, 64, SEEK_SET)                  = 64
+read(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784) = 784
+lseek(3, 848, SEEK_SET)                 = 848
+read(3, "\4\0\0\0\20\0\0\0\5\0\0\0GNU\0\2\0\0\300\4\0\0\0\3\0\0\0\0\0\0\0", 32) = 32
+lseek(3, 880, SEEK_SET)                 = 880
+read(3, "\4\0\0\0\24\0\0\0\3\0\0\0GNU\0q7?\324>\326\250>\n\253\230<:\227\0362"..., 68) = 68
+fstat(3, {st_mode=S_IFREG|0755, st_size=2025032, ...}) = 0
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f3033a3d000
+lseek(3, 64, SEEK_SET)                  = 64
+read(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784) = 784
+lseek(3, 848, SEEK_SET)                 = 848
+read(3, "\4\0\0\0\20\0\0\0\5\0\0\0GNU\0\2\0\0\300\4\0\0\0\3\0\0\0\0\0\0\0", 32) = 32
+lseek(3, 880, SEEK_SET)                 = 880
+read(3, "\4\0\0\0\24\0\0\0\3\0\0\0GNU\0q7?\324>\326\250>\n\253\230<:\227\0362"..., 68) = 68
+mmap(NULL, 2032984, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f303384c000
+mmap(0x7f3033871000, 1540096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x25000) = 0x7f3033871000
+mmap(0x7f30339e9000, 303104, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x19d000) = 0x7f30339e9000
+mmap(0x7f3033a33000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e6000) = 0x7f3033a33000
+mmap(0x7f3033a39000, 13656, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f3033a39000
+close(3)                                = 0
+arch_prctl(ARCH_SET_FS, 0x7f3033a3e540) = 0
+mprotect(0x7f3033a33000, 12288, PROT_READ) = 0
+mprotect(0x55b15484d000, 4096, PROT_READ) = 0
+mprotect(0x7f3033a7d000, 4096, PROT_READ) = 0
+munmap(0x7f3033a3f000, 71772)           = 0
+rt_sigaction(SIGALRM, {sa_handler=SIG_DFL, sa_mask=[ALRM], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f3033892470}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+fstat(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(0x88, 0), ...}) = 0
+brk(NULL)                               = 0x55b155d02000
+brk(0x55b155d23000)                     = 0x55b155d23000
+write(1, "Challenge: (((((-504915624) - (1"..., 281Challenge: (((((-504915624) - (1894965760)) - ((-1970550000) + (-1375473640))) + (((1134240392) + (1854332308)) + ((1788050992) + (1614043556)))) + ((((1885270848) - (970931223)) + ((-1798664131) + (-1254097730))) + (((541877902) + (-1171023374)) + ((75858856) + (-1204645376)))))
+) = 281
+write(1, "Setting alarm...\n", 17Setting alarm...
+)      = 17
+setitimer(ITIMER_REAL, {it_interval={tv_sec=0, tv_usec=0}, it_value={tv_sec=0, tv_usec=5000}}, {it_interval={tv_sec=0, tv_usec=0}, it_value={tv_sec=0, tv_usec=0}}) = 0
+fstat(0, {st_mode=S_IFCHR|0620, st_rdev=makedev(0x88, 0), ...}) = 0
+write(1, "Solution? ", 10Solution? )              = 10
+read(0, 0x55b155d026b0, 1024)           = ? ERESTARTSYS (To be restarted if SA_RESTART is set)
+--- SIGALRM {si_signo=SIGALRM, si_code=SI_KERNEL} ---
++++ killed by SIGALRM +++
+Alarm clock
+```
+
+At near the end of the output, we see `it_value={tv_sec=0, tv_usec=5000}`. Hence, the time for us to input the answer is 5000 us.
+
+Write the following bash script to calculate the answer and input it into the program:
+
+```bash
+#!/bin/bash
+
+coproc ./times-up
+read LINE <&${COPROC[0]}
+echo $(echo ${LINE:11} | bc) >&${COPROC[1]}
+cat <&${COPROC[0]}
+```
+
+Then, we will get the following result:
+
+```bash
+deepzero:~$ ls
+test.sh
+deepzero:~$ cd /problems/time-s-up_4_548d4bc5ce82bf27864a00001fcbd182
+deepzero:/problems/time-s-up_4_548d4bc5ce82bf27864a00001fcbd182$ bash ~/test.sh 
+Setting alarm...
+picoCTF{Gotta go fast. Gotta go FAST. #046cc375}
+Solution? Congrats! Here is the flag!
+deepzero:/problems/time-s-up_4_548d4bc5ce82bf27864a00001fcbd182$
+```
