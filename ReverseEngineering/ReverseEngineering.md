@@ -417,3 +417,182 @@ gcc -m32 test.o main.o -o main
 
 # => 0xe52c
 ```
+
+### reverse_cipher (300 points)
+
+We have recovered a binary and a text file. Can you reverse the flag. Its also found in `/problems/reverse-cipher_5_6e21330f568439d366f5c038e32e5572` on the shell server.
+
+FLAG: `picoCTF{r3v3rs3321bda1b}`
+
+Given the binary file, we can use Ghidra to decompile it. Then, we can get the following decompiled `main` function in C.
+
+```c
+
+void main(void)
+
+{
+  size_t sVar1;
+  char local_58 [23];
+  char local_41;
+  int local_2c;
+  FILE *local_28;
+  FILE *local_20;
+  uint local_14;
+  int local_10;
+  char local_9;
+  
+  local_20 = fopen("flag.txt","r");
+  local_28 = fopen("rev_this","a");
+  if (local_20 == (FILE *)0x0) {
+    puts("No flag found, please make sure this is run on the server");
+  }
+  if (local_28 == (FILE *)0x0) {
+    puts("please run this on the server");
+  }
+  sVar1 = fread(local_58,0x18,1,local_20);
+  local_2c = (int)sVar1;
+  if ((int)sVar1 < 1) {
+                    /* WARNING: Subroutine does not return */
+    exit(0);
+  }
+  local_10 = 0;
+  while (local_10 < 8) {
+    local_9 = local_58[local_10];
+    fputc((int)local_9,local_28);
+    local_10 = local_10 + 1;
+  }
+  local_14 = 8;
+  while ((int)local_14 < 0x17) {
+    if ((local_14 & 1) == 0) {
+      local_9 = local_58[(int)local_14] + '\x05';
+    }
+    else {
+      local_9 = local_58[(int)local_14] + -2;
+    }
+    fputc((int)local_9,local_28);
+    local_14 = local_14 + 1;
+  }
+  local_9 = local_41;
+  fputc((int)local_41,local_28);
+  fclose(local_28);
+  fclose(local_20);
+  return;
+}
+```
+
+Reading this function, we know the binary file basically take the original flag file and make some modification to it. Hence, we can write the following Python script to reverse the change and find the original flag:
+
+```python3
+#!/usr/bin/env python3
+
+f = open("rev_this", "r")
+
+flag = ""
+modified_flag = f.readline().strip()
+
+# Keep the first 8 chars to be the same
+
+flag += modified_flag[:8]
+
+# For index from 8 to 22, change the value back to the original
+
+for i in range(8, 23):
+    if i % 2 == 0:
+    ¦   flag += chr(ord(modified_flag[i]) - 0x5)
+    else:
+    ¦   flag += chr(ord(modified_flag[i]) + 2)
+
+# Add the last char
+
+flag += modified_flag[-1]
+
+f.close()
+
+print(flag)
+```
+
+### droids0 (300 points)
+
+Where do droid logs go. Check out this file. You can also find the file in `/problems/droids0_0_205f7b4a3b23490adffddfcfc45a2ca3`.
+
+FLAG: `picoCTF{com.hellocmu.picoctf}`
+
+Use Android Studio to open the `zero.apk` file and find the flag.
+
+
+
+???????????????????????????????????????//
+
+### vault-door-5 (300 points)
+
+In the last challenge, you mastered octal (base 8), decimal (base 10), and hexadecimal (base 16) numbers, but this vault door uses a different change of base as well as URL encoding! The source code for this vault is here: `VaultDoor5.java`
+
+FLAG: `picoCTF{c0nv3rt1ng_fr0m_ba5e_64_da882d01}`
+
+```java
+import java.net.URLDecoder;
+import java.util.*;
+
+class VaultDoor5 {
+    public static void main(String args[]) {
+        VaultDoor5 vaultDoor = new VaultDoor5();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter vault password: ");
+        String userInput = scanner.next();
+        String input = userInput.substring("picoCTF{".length(), userInput.length() - 1);
+        if (vaultDoor.checkPassword(input)) {
+            System.out.println("Access granted.");
+        } else {
+            System.out.println("Access denied!");
+        }
+    }
+
+    // Minion #7781 used base 8 and base 16, but this is base 64, which is
+    // like... eight times stronger, right? Riiigghtt? Well that's what my twin
+    // brother Minion #2415 says, anyway.
+    //
+    // -Minion #2414
+    public String base64Encode(byte[] input) {
+        return Base64.getEncoder().encodeToString(input);
+    }
+
+    // URL encoding is meant for web pages, so any double agent spies who steal
+    // our source code will think this is a web site or something, defintely not
+    // vault door! Oh wait, should I have not said that in a source code
+    // comment?
+    //
+    // -Minion #2415
+    public String urlEncode(byte[] input) {
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < input.length; i++) {
+            buf.append(String.format("%%%2x", input[i]));
+        }
+        return buf.toString();
+    }
+
+    public boolean checkPassword(String password) {
+        String urlEncoded = urlEncode(password.getBytes());
+        String base64Encoded = base64Encode(urlEncoded.getBytes());
+        String expected = "JTYzJTMwJTZlJTc2JTMzJTcyJTc0JTMxJTZlJTY3JTVm" +
+            "JTY2JTcyJTMwJTZkJTVmJTYyJTYxJTM1JTY1JTVmJTM2" +
+            "JTM0JTVmJTY0JTYxJTM4JTM4JTMyJTY0JTMwJTMx";
+        return base64Encoded.equals(expected);
+    }
+}
+```
+
+Reverse the whole procedure using the following Python script:
+
+```python3
+#!/usr/bin/env python3
+
+import base64
+
+s = "JTYzJTMwJTZlJTc2JTMzJTcyJTc0JTMxJTZlJTY3JTVmJTY2JTcyJTMwJTZkJTVmJTYyJTYxJTM1JTY1JTVmJTM2JTM0JTVmJTY0JTYxJTM4JTM4JTMyJTY0JTMwJTMx"
+urlEncoded = base64.b64decode(s)
+urlEncoded_list = [urlEncoded[i:i+3] for i in range(0, len(urlEncoded), 3)]
+byte_list = [int(sym[1:], 16) for sym in urlEncoded_list]
+char_list = [chr(b) for b in byte_list]
+flag = "".join(char_list)
+print(flag)
+```
