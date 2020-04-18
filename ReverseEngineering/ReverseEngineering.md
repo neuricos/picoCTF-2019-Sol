@@ -596,3 +596,248 @@ char_list = [chr(b) for b in byte_list]
 flag = "".join(char_list)
 print(flag)
 ```
+
+### vault-door-6 (350 points)
+
+This vault uses an XOR encryption scheme. The source code for this vault is here: VaultDoor6.java
+
+FLAG: `picoCTF{n0t_mUcH_h4rD3r_tH4n_x0r_0c3a2de}`
+
+```java
+import java.util.*;
+
+class VaultDoor6 {
+    public static void main(String args[]) {
+        VaultDoor6 vaultDoor = new VaultDoor6();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter vault password: ");
+        String userInput = scanner.next();
+        String input = userInput.substring("picoCTF{".length(),userInput.length()-1);
+        if (vaultDoor.checkPassword(input)) {
+            System.out.println("Access granted.");
+        } else {
+            System.out.println("Access denied!");
+        }
+    }
+
+    // Dr. Evil gave me a book called Applied Cryptography by Bruce Schneier,
+    // and I learned this really cool encryption system. This will be the
+    // strongest vault door in Dr. Evil's entire evil volcano compound for sure!
+    // Well, I didn't exactly read the *whole* book, but I'm sure there's
+    // nothing important in the last 750 pages.
+    //
+    // -Minion #3091
+    public boolean checkPassword(String password) {
+        if (password.length() != 32) {
+            return false;
+        }
+        byte[] passBytes = password.getBytes();
+        byte[] myBytes = {
+            0x3b, 0x65, 0x21, 0xa , 0x38, 0x0 , 0x36, 0x1d,
+            0xa , 0x3d, 0x61, 0x27, 0x11, 0x66, 0x27, 0xa ,
+            0x21, 0x1d, 0x61, 0x3b, 0xa , 0x2d, 0x65, 0x27,
+            0xa , 0x65, 0x36, 0x66, 0x34, 0x67, 0x31, 0x30,
+        };
+        for (int i=0; i<32; i++) {
+            if (((passBytes[i] ^ 0x55) - myBytes[i]) != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+```
+
+Use the following Python script to convert the bytes back to the original ones:
+
+```python3
+#!/usr/bin/env python3
+
+bs = [0x3b,0x65,0x21,0xa,0x38,0x0,0x36,0x1d,0xa,0x3d,0x61,0x27,0x11,0x66,0x27,0xa,0x21,0x1d,0x61,0x3b,0xa,0x2d,0x65,0x27,0xa,0x65,0x36,0x66,0x34,0x67,0x31,0x30]
+
+flag = "".join([chr(b ^ 0x55) for b in bs])
+print(flag)
+```
+
+### Need For Speed (400 points)
+
+The name of the game is speed. Are you quick enough to solve this problem and keep it above 50 mph? `need-for-speed`.
+
+FLAG: `PICOCTF{Good job keeping bus #1cf20c02 speeding along!}`
+
+```bash
+deepzero@ubuntu:~/Desktop$ cp need-for-speed patched
+deepzero@ubuntu:~/Desktop$ ls
+need-for-speed  patched  patched.log
+deepzero@ubuntu:~/Desktop$ r2 patched
+[0x000006b0]> aaa
+[Invalid instruction of 16367 bytes at 0x1cb entry0 (aa)
+[x] Analyze all flags starting with sym. and entry0 (aa)
+[x] Analyze function calls (aac)
+[x] Analyze len bytes of instructions for references (aar)
+[x] Constructing a function name for fcn.* and sym.func.* functions (aan)
+[x] Type matching analysis for all functions (aaft)
+[x] Use -AA or aaaa to perform additional experimental analysis.
+[0x000006b0]> afl
+0x00000000    6 459  -> 485  sym.imp.__libc_start_main
+0x00000610    3 23           sym._init
+0x00000640    1 6            sym.imp.putchar
+0x00000650    1 6            sym.imp.puts
+0x00000660    1 6            sym.imp.printf
+0x00000670    1 6            sym.imp.alarm
+0x00000680    1 6            sym.imp.__sysv_signal
+0x00000690    1 6            sym.imp.exit
+0x000006a0    1 6            sub.__cxa_finalize_6a0
+0x000006b0    1 43           entry0
+0x000006e0    4 50   -> 40   sym.deregister_tm_clones
+0x00000720    4 66   -> 57   sym.register_tm_clones
+0x00000770    5 58   -> 51   sym.__do_global_dtors_aux
+0x000007b0    1 10           entry.init0
+0x000007ba    6 135          sym.decrypt_flag
+0x00000841    3 29           sym.calculate_key
+0x0000085e    1 33           sym.alarm_handler
+0x0000087f    3 88           sym.set_timer
+0x000008d7    1 47           sym.get_key
+0x00000906    1 44           sym.print_flag
+0x00000932    4 66           sym.header
+0x00000974    1 62           sym.main
+0x000009c0    3 101  -> 92   sym.__libc_csu_init
+0x00000a30    1 2            sym.__libc_csu_fini
+0x00000a34    1 9            sym._fini
+[0x000006b0]> s sym.get_key
+[0x000008d7]> pdf
+/ (fcn) sym.get_key 47
+|   sym.get_key ();
+|           ; CALL XREF from sym.main (0x99c)
+|           0x000008d7      55             push rbp
+|           0x000008d8      4889e5         mov rbp, rsp
+|           0x000008db      488d3dfc0100.  lea rdi, qword str.Creating_key... ; 0xade ; "Creating key..." ; const char *s
+|           0x000008e2      e869fdffff     call sym.imp.puts           ; int puts(const char *s)
+|           0x000008e7      b800000000     mov eax, 0
+|           0x000008ec      e850ffffff     call sym.calculate_key
+|           0x000008f1      890565072000   mov dword [obj.key], eax    ; [0x20105c:4]=0
+|           0x000008f7      488d3df00100.  lea rdi, qword str.Finished ; 0xaee ; "Finished" ; const char *s
+|           0x000008fe      e84dfdffff     call sym.imp.puts           ; int puts(const char *s)
+|           0x00000903      90             nop
+|           0x00000904      5d             pop rbp
+\           0x00000905      c3             ret
+[0x000008d7]> s sym.calculate_key
+[0x00000841]> pdf
+/ (fcn) sym.calculate_key 29
+|   sym.calculate_key ();
+|           ; var unsigned int local_4h @ rbp-0x4
+|           ; CALL XREF from sym.get_key (0x8ec)
+|           0x00000841      55             push rbp
+|           0x00000842      4889e5         mov rbp, rsp
+|           0x00000845      c745fc566147.  mov dword [local_4h], 0xd2476156
+|           ; CODE XREF from sym.calculate_key (0x857)
+|       .-> 0x0000084c      836dfc01       sub dword [local_4h], 1
+|       :   0x00000850      817dfcabb023.  cmp dword [local_4h], 0xe923b0ab
+|       `=< 0x00000857      75f3           jne 0x84c
+|           0x00000859      8b45fc         mov eax, dword [local_4h]
+|           0x0000085c      5d             pop rbp
+\           0x0000085d      c3             ret
+[0x00000841]> oo+
+[0x00000841]> s 0x00000845
+[0x00000845]> pd
+|           0x00000845      c745fc566147.  mov dword [local_4h], 0xd2476156
+|           ; CODE XREF from sym.calculate_key (0x857)
+|       .-> 0x0000084c      836dfc01       sub dword [local_4h], 1
+|       :   0x00000850      817dfcabb023.  cmp dword [local_4h], 0xe923b0ab
+|       `=< 0x00000857      75f3           jne 0x84c
+|           0x00000859      8b45fc         mov eax, dword [local_4h]
+|           0x0000085c      5d             pop rbp
+\           0x0000085d      c3             ret
+/ (fcn) sym.alarm_handler 33
+|   sym.alarm_handler (int arg1);
+|           ; var int local_4h @ rbp-0x4
+|           ; arg int arg1 @ rdi
+|           ; DATA XREF from sym.set_timer (0x88e)
+|           0x0000085e      55             push rbp
+|           0x0000085f      4889e5         mov rbp, rsp
+|           0x00000862      4883ec10       sub rsp, 0x10
+|           0x00000866      897dfc         mov dword [local_4h], edi   ; arg1
+|           0x00000869      488d3de00100.  lea rdi, qword str.Not_fast_enough._BOOM ; 0xa50 ; "Not fast enough. BOOM!" ; const char *s
+|           0x00000870      e8dbfdffff     call sym.imp.puts           ; int puts(const char *s)
+|           0x00000875      bf00000000     mov edi, 0                  ; int status
+\           0x0000087a      e811feffff     call sym.imp.exit           ; void exit(int status)
+/ (fcn) sym.set_timer 88
+|   sym.set_timer ();
+|           ; var int local_ch @ rbp-0xc
+|           ; var unsigned int local_8h @ rbp-0x8
+|           ; CALL XREF from sym.main (0x992)
+|           0x0000087f      55             push rbp
+|           0x00000880      4889e5         mov rbp, rsp
+|           0x00000883      4883ec10       sub rsp, 0x10
+|           0x00000887      c745f4010000.  mov dword [local_ch], 1
+|           0x0000088e      488d35c9ffff.  lea rsi, qword [sym.alarm_handler] ; 0x85e
+|           0x00000895      bf0e000000     mov edi, 0xe
+|           0x0000089a      e8e1fdffff     call sym.imp.__sysv_signal
+|           0x0000089f      488945f8       mov qword [local_8h], rax
+|           0x000008a3      48837df8ff     cmp qword [local_8h], -1
+|       ,=< 0x000008a8      7520           jne 0x8ca
+|       |   0x000008aa      be3c000000     mov esi, 0x3c               ; '<'
+|       |   0x000008af      488d3db20100.  lea rdi, qword str.Something_bad_happened_here.___If_running_on_the_shell_server__Please_contact_the_admins_with__need_for_speed.c:_d_. ; 0xa68 ; "\n\nSomething bad happened here. \nIf running on the shell server\nPlease contact the admins with \"need-for-speed.c:%d\".\n" ; const char *format
+|       |   0x000008b6      b800000000     mov eax, 0
+|       |   0x000008bb      e8a0fdffff     call sym.imp.printf         ; int printf(const char *format)
+|       |   0x000008c0      bf00000000     mov edi, 0                  ; int status
+|       |   0x000008c5      e8c6fdffff     call sym.imp.exit           ; void exit(int status)
+|       |   ; CODE XREF from sym.set_timer (0x8a8)
+|       `-> 0x000008ca      8b45f4         mov eax, dword [local_ch]
+|           0x000008cd      89c7           mov edi, eax
+|           0x000008cf      e89cfdffff     call sym.imp.alarm
+|           0x000008d4      90             nop
+|           0x000008d5      c9             leave
+\           0x000008d6      c3             ret
+/ (fcn) sym.get_key 47
+|   sym.get_key ();
+|           ; CALL XREF from sym.main (0x99c)
+|           0x000008d7      55             push rbp
+|           0x000008d8      4889e5         mov rbp, rsp
+|           0x000008db      488d3dfc0100.  lea rdi, qword str.Creating_key... ; 0xade ; "Creating key..." ; const char *s
+|           0x000008e2      e869fdffff     call sym.imp.puts           ; int puts(const char *s)
+|           0x000008e7      b800000000     mov eax, 0
+|           0x000008ec      e850ffffff     call sym.calculate_key
+|           0x000008f1      890565072000   mov dword [obj.key], eax    ; [0x20105c:4]=0
+|           0x000008f7      488d3df00100.  lea rdi, qword str.Finished ; 0xaee ; "Finished" ; const char *s
+|           0x000008fe      e84dfdffff     call sym.imp.puts           ; int puts(const char *s)
+|           0x00000903      90             nop
+|           0x00000904      5d             pop rbp
+\           0x00000905      c3             ret
+/ (fcn) sym.print_flag 44
+|   sym.print_flag ();
+|           ; CALL XREF from sym.main (0x9a6)
+|           0x00000906      55             push rbp
+|           0x00000907      4889e5         mov rbp, rsp
+|           0x0000090a      488d3de60100.  lea rdi, qword str.Printing_flag: ; 0xaf7 ; "Printing flag:" ; const char *s
+|           0x00000911      e83afdffff     call sym.imp.puts           ; int puts(const char *s)
+|           0x00000916      8b0540072000   mov eax, dword [obj.key]    ; [0x20105c:4]=0
+|           0x0000091c      89c7           mov edi, eax
+|           0x0000091e      e897feffff     call sym.decrypt_flag
+|           0x00000923      488d3df60620.  lea rdi, qword obj.flag     ; 0x201020 ; const char *s
+|           0x0000092a      e821fdffff     call sym.imp.puts           ; int puts(const char *s)
+|           0x0000092f      90             nop
+|           0x00000930      5d             pop rbp
+\           0x00000931      c3             ret
+/ (fcn) sym.header 66
+|   sym.header ();
+|           ; var int local_4h @ rbp-0x4
+|           ; CALL XREF from sym.main (0x988)
+|           0x00000932      55             push rbp
+|           0x00000933      4889e5         mov rbp, rsp
+|           0x00000936      4883ec10       sub rsp, 0x10
+[0x00000845]> pd 1
+|           0x00000845      c745fc566147.  mov dword [local_4h], 0xd2476156
+[0x00000845]> wa mov dword [rbp-0x4], 0xe923b0ac
+Written 7 byte(s) (mov dword [rbp-0x4], 0xe923b0ac) = wx c745fcacb023e9
+[0x00000845]> q
+deepzero@ubuntu:~/Desktop$ chmod u+x patched
+deepzero@ubuntu:~/Desktop$ ./patched 
+Keep this thing over 50 mph!
+============================
+
+Creating key...
+Finished
+Printing flag:
+PICOCTF{Good job keeping bus #1cf20c02 speeding along!}
+```
