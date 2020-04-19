@@ -940,3 +940,25 @@ picoCTF{Gotta go fast. Gotta go FAST. #046cc375}
 Solution? Congrats! Here is the flag!
 deepzero:/problems/time-s-up_4_548d4bc5ce82bf27864a00001fcbd182$
 ```
+
+### droids1 (350 points)
+
+Find the pass, get the flag. Check out this file. You can also find the file in `/problems/droids1_0_b7f94e21c7e45e6604972f9bc3f50e24`.
+
+FLAG: `picoCTF{pining.for.the.fjords}`
+
+Follow the same procedures as we have done in `droid0`. This time, we have to type in a password into the app to show the flag.
+
+Use the following Bash command to find the password:
+
+```bash
+$ find . -type f | xargs cat | grep password
+    <public type="string" name="password" id="0x7f0b002f" />
+    <string name="password">opossum</string>
+    .param p1, "password"    # Z
+    const-string v2, "; password: "
+    .local v0, "password":Ljava/lang/String;
+.field public static final password:I = 0x7f0b002f
+```
+
+Hence, we know that the password is `opossum`. Fill that in and we can see the flag is `picoCTF{pining.for.the.fjords}`.
