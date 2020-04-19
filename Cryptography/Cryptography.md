@@ -8,7 +8,7 @@ The numbers... what do they mean?
 
 FLAG:`PICOCTF{THENUMBERSMASON}`
 
-```
+```text
 16 9 3 15 3 20 6 { 20 8 5
 14 21 13 2 5 18 19 13 1
 19 15 14 }
@@ -30,7 +30,7 @@ Cryptography can be easy, do you know what ROT13 is? `cvpbPGS{abg_gbb_onq_bs_n_c
 
 FLAG: `picoCTF{not_too_bad_of_a_problem}`
 
-*rot13.py*
+*rot13.py*:
 
 ```python3
 import sys
@@ -73,8 +73,8 @@ The one time pad can be cryptographically secure, but not when you know the key.
 
 FLAG: `picoCTF{CRYPTOISFUN}`
 
-```
-    A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 
+```text
+    A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
    +----------------------------------------------------
 A | A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
 B | B C D E F G H I J K L M N O P Q R S T U V W X Y Z A
@@ -104,7 +104,7 @@ Y | Y Z A B C D E F G H I J K L M N O P Q R S T U V W X
 Z | Z A B C D E F G H I J K L M N O P Q R S T U V W X Y
 ```
 
-*easy1.py*
+*easy1.py*:
 
 ```python3
 import itertools
@@ -137,11 +137,11 @@ FLAG: `picoCTF{crossingtherubiconwmanvbbo}`
 
 *message:*
 
-```
+```text
 picoCTF{zolppfkdqeboryfzlktjxksyyl}
 ```
 
-```
+```text
 # Modify the code in rot13.py a little bit and we can get the following
 # => crossingtherubiconwmanvbbo
 ```
@@ -166,11 +166,11 @@ A musician left us a message. What's it mean?
 
 FLAG: `picoCTF{KODIAK_ALASKA}`
 
-```
+```text
 picoCTF{(35.028309, 135.753082)(46.469391, 30.740883)(39.758949, -84.191605)(41.015137, 28.979530)(24.466667, 54.366669)(3.140853, 101.693207)_(9.005401, 38.763611)(-3.989038, -79.203560)(52.377956, 4.897070)(41.085651, -73.858467)(57.790001, -152.407227)(31.205753, 29.924526)}
 ```
 
-```
+```text
 (35.028309, 135.753082)     Nakanocho, Kamigyo Ward, [K]yoto, Japan
 (46.469391, 30.740883)      Odesa, [O]dessa Oblast, Ukraine, 65000
 (39.758949, -84.191605)     [D]ayton, OH 45402
@@ -238,7 +238,7 @@ FLAG: `PICOCTF{M0RS3C0D31SFUN903140448}`
 
 Remove the curly braces and use the online Morse Decoder, we get the following:
 
-```
+```text
 PICOCTFM0RS3C0D31SFUN903140448
 ```
 
@@ -250,12 +250,12 @@ FLAG: `picoCTF{b311a50_0r_v1gn3r3_c1ph3r1119c336}`
 
 *Encrypted message:*
 
-```
+```text
 ﻿Ne iy nytkwpsznyg nth it mtsztcy vjzprj zfzjy rkhpibj nrkitt ltc tnnygy ysee itd tte cxjltk
 
 Ifrosr tnj noawde uk siyyzre, yse Bnretèwp Cousex mls hjpn xjtnbjytki xatd eisjd
 
-Iz bls lfwskqj azycihzeej yz Brftsk ip Volpnèxj ls oy hay tcimnyarqj dkxnrogpd os 1553 my Mnzvgs Mazytszf Merqlsu ny hox moup Wa inqrg ipl. Ynr. Gotgat Gltzndtg Gplrfdo 
+Iz bls lfwskqj azycihzeej yz Brftsk ip Volpnèxj ls oy hay tcimnyarqj dkxnrogpd os 1553 my Mnzvgs Mazytszf Merqlsu ny hox moup Wa inqrg ipl. Ynr. Gotgat Gltzndtg Gplrfdo
 
 Ltc tnj tmvqpmkseaznzn uk ehox nivmpr g ylbrj ts ltcmki my yqtdosr tnj wocjc hgqq ol fy oxitngwj arusahje fuw ln guaaxjytrd catizm tzxbkw zf vqlckx hizm ceyupcz yz tnj fpvjc hgqqpohzCZK{m311a50_0x_a1rn3x3_h1ah3x1119h336}
 
@@ -272,12 +272,12 @@ This is **Vigenère cipher**. Use [this website](https://www.guballa.de/vigenere
 
 *Decrypted message:*
 
-```
+```text
 It is interesting how in history people often receive credit for things they did not create
 
 During the course of history, the Vigenère Cipher has been reinvented many times
 
-It was falsely attributed to Blaise de Vigenère as it was originally described in 1553 by Giovan Battista Bellaso in his book La cifra del. Sig. Giovan Battista Bellaso 
+It was falsely attributed to Blaise de Vigenère as it was originally described in 1553 by Giovan Battista Bellaso in his book La cifra del. Sig. Giovan Battista Bellaso
 
 For the implementation of this cipher a table is formed by sliding the lower half of an ordinary alphabet for an apparently random number of places with respect to the upper halfpicoCTF{b311a50_0r_v1gn3r3_c1ph3r1119c336}
 
@@ -298,7 +298,7 @@ Class, take your seats! It's PRIME-time for a quiz... `nc 2019shell1.picoctf.com
 
 FLAG: `picoCTF{wA8_th4t$_ill3aGal..o4d21b3ca}`
 
-*rsa.py*
+*rsa.py*:
 
 ```python3
 from Crypto.Util.number import inverse
@@ -380,7 +380,7 @@ def main():
     d = inverse(e, tot)
     pt = pow(ct, d, n)
     print(f"plain text = {pt}")
-    
+
 
 if __name__ == '__main__':
     main()
@@ -491,7 +491,7 @@ Outstanding move!!!
 
 If you convert the last plaintext to a hex number, then ascii, you'll find what you need! ;)
 
-shell:~$ 
+shell:~$
 ```
 
 ```python3
@@ -505,18 +505,18 @@ Lets decrypt this: ciphertext? Something seems a bit small.
 
 FLAG: `picoCTF{n33d_a_lArg3r_e_11db861f}`
 
-```
+```text
 
 N: 29331922499794985782735976045591164936683059380558950386560160105740343201513369939006307531165922708949619162698623675349030430859547825708994708321803705309459438099340427770580064400911431856656901982789948285309956111848686906152664473350940486507451771223435835260168971210087470894448460745593956840586530527915802541450092946574694809584880896601317519794442862977471129319781313161842056501715040555964011899589002863730868679527184420789010551475067862907739054966183120621407246398518098981106431219207697870293412176440482900183550467375190239898455201170831410460483829448603477361305838743852756938687673
 e: 3
 
-ciphertext (c): 2205316413931134031074603746928247799030155221252519872649602375643231006596573791863783976856797977916843724727388379790172135717557077760267874464115099065405422557746246682213987550407899612567166189989232143975665175662662107329564517 
+ciphertext (c): 2205316413931134031074603746928247799030155221252519872649602375643231006596573791863783976856797977916843724727388379790172135717557077760267874464115099065405422557746246682213987550407899612567166189989232143975665175662662107329564517
 
 ```
 
 The problem with `e` and `plaintext` being too small relatively to `n` is that:
 
-```
+```text
 ciphertext = pow(plaintext, e) % n = pow(plaintext, e)
 => plaintext = log_e(ciphertext)
 ```
@@ -536,7 +536,7 @@ ge = gmpy2.mpz(e)
 
 root, exact = gmpy2.iroot(gct, ge)
 print(bytes.fromhex(format(root, 'x')).decode('utf-8'))
-# => picoCTF{n33d_a_lArg3r_e_11db861f} 
+# => picoCTF{n33d_a_lArg3r_e_11db861f}
 ```
 
 ### waves over lambda (300 points)
@@ -545,7 +545,7 @@ We made alot of substitutions to encrypt this. Can you decrypt it? Connect with 
 
 FLAG: `picoCTF{frequency_is_c_over_lambda_vlnhnasstm}`
 
-```
+```text
 -------------------------------------------------------------------------------
 cnqmofxg yeoe ug snlo zafm - zoekleqcs_ug_c_njeo_afitpf_jaqyqfggxi
 -------------------------------------------------------------------------------
@@ -554,7 +554,7 @@ yfjuqm yfp gnie xuie fx is pugvngfa dyeq uq anqpnq, u yfp juguxep xye touxugy il
 
 Use frequency analysis. Go to [this website](https://www.quipqiup.com/) to decrypt the message.
 
-```
+```text
 congrats here is your flag - frequency_is_c_over_lambda_vlnhnasstm having had some time at my disposal when in london, i had visited the british museum, and made search among the books and maps in the library regarding transylvania; it had struck me that some foreknowledge of the country could hardly fail to have some importance in dealing with a nobleman of that country. i find that the district he named is in the extreme east of the country, just on the borders of three states, transylvania, moldavia and bukovina, in the midst of the carpathian mountains; one of the wildest and least known portions of europe. i was not able to light on any map or work giving the exact locality of the castle dracula, as there are no maps of this country as yet to compare with our own ordnance survey maps; but i found that bistritz, the post town named by count dracula, is a fairly well-known place. i shall enter here some of my notes, as they may refresh my memory when i talk over my travels with mina.
 ```
 
@@ -566,7 +566,7 @@ FLAG: `picoCTF{bad_1d3a5_4986370}`
 
 *message:*
 
-```
+```text
 c: 62184417101943249390536548122782080977356599035997302574376880537482381554858897365887269695404188786294349796991984193789883594283864335007196590972036943430997138981146440715584619005245379762102004137077753169791864298561229275338052509902860500343841423361993244744836154381168928976840915826792643224015
 n: 128949474997714784368113704808455226929434851101345008102995587704589326730818822477695491718430186567077219057982598842134709371363883750221031058490887087971254523824570887870062702958485726133498613427248170383846849932286299813468034292671307845194264823707573660016150671413698559120758978445191898735963
 e: 78103199872351318575648465940943745257853066427634620087102092771009861979948016513604872724767478764364102880916417612013630292755075231777832794708268032619025272619305862177820896074713878625330810458773724256529523534048200314310870188963097504090913438420320744686739256825363998764281670991011089190473
@@ -611,7 +611,7 @@ optional arguments:
 
 $ python3 RsaCtfTool-master/RsaCtfTool.py --createpub -e 78103199872351318575648465940943745257853066427634620087102092771009861979948016513604872724767478764364102880916417612013630292755075231777832794708268032619025272619305862177820896074713878625330810458773724256529523534048200314310870188963097504090913438420320744686739256825363998764281670991011089190473 -n 128949474997714784368113704808455226929434851101345008102995587704589326730818822477695491718430186567077219057982598842134709371363883750221031058490887087971254523824570887870062702958485726133498613427248170383846849932286299813468034292671307845194264823707573660016150671413698559120758978445191898735963 > key.pub
 
-$ cat key.pub 
+$ cat key.pub
 -----BEGIN PUBLIC KEY-----
 MIIBHzANBgkqhkiG9w0BAQEFAAOCAQwAMIIBBwKBgQC3oVFdMhpvoRv4jSPmzApH
 Ko+y3q3GJaN+k1imP1vVbd0LjhJ5vF/ZvcJICiAlpWauJ7pMEz4IzzKaMDYOWpH8
@@ -637,10 +637,10 @@ $
 ```
 
 ```bash
-$ cat ciphertext 
+$ cat ciphertext
 ???'???\[?H??n?Ovu??0??Li???#??r h?y?/N9??mj4;??~J?6.+Y:?A'*m??O?[??rF?EW?x?'7??㦃?yN??h??
 
-$ xxd ciphertext 
+$ xxd ciphertext
 00000000: 588d b569 72c1 c061 f99e c105 70be 8ba2  X..ir..a....p...
 00000010: 9569 63b4 9730 92f8 4c5b f982 0d08 a6ba  .ic..0..L[......
 00000020: ce27 e5ce c75c 5bf0 a148 84fa 6efb 4f05  .'...\[..H..n.O.
@@ -708,7 +708,7 @@ def to_bytes(n):
     decoded = s_n.decode('hex')
 
     pad = (len(decoded) % BLOCK_SIZE)
-    if pad != 0: 
+    if pad != 0:
         decoded = "\0" * (BLOCK_SIZE - pad) + decoded
     return decoded
 
@@ -728,7 +728,7 @@ def parse_header_ppm(f):
         header += header_i
 
     return header, data
-        
+
 
 def pad(pt):
     padding = BLOCK_SIZE - len(pt) % BLOCK_SIZE
@@ -742,7 +742,7 @@ def aes_abc_encrypt(pt):
     blocks = [ct[i * BLOCK_SIZE:(i+1) * BLOCK_SIZE] for i in range(len(ct) / BLOCK_SIZE)]
     iv = os.urandom(16)
     blocks.insert(0, iv)
-    
+
     for i in range(len(blocks) - 1):
         prev_blk = int(blocks[i].encode('hex'), 16)
         curr_blk = int(blocks[i+1].encode('hex'), 16)
@@ -751,14 +751,14 @@ def aes_abc_encrypt(pt):
         blocks[i+1] = to_bytes(n_curr_blk)
 
     ct_abc = "".join(blocks)
- 
+
     return iv, ct_abc, ct
 
 
 if __name__=="__main__":
     with open('flag.ppm', 'rb') as f:
         header, data = parse_header_ppm(f)
-    
+
     iv, c_img, ct = aes_abc_encrypt(data)
 
     with open('body.enc.ppm', 'wb') as fw:
@@ -814,3 +814,52 @@ As you can see, the decrypted image is like this:
 *flag.ppm:*
 
 ![flag.ppm](./aes_abc_flag.png)
+
+### b00tl3gRSA3 (450 points)
+
+Why use p and q when I can use more? Connect with `nc 2019shell1.picoctf.com 45122`.
+
+FLAG: `picoCTF{too_many_fact0rs_8024768}`
+
+Once we connect to the server, we will see the following:
+
+```bash
+$ nc 2019shell1.picoctf.com 45122
+c: 928578955028473644356789381666024062722034323228797183377346332180897385665794462100512294120125788070453011950197291403579469313249177592508136324909989197132327350914252857799764603999027550303640977582887744877827400516692953369103601617550021677081387344442157290361933817649607439353527340724900261160739911528641194691399315963422884183
+n: 43427803384841675741795294286614281293038074243773627102620871168909551143168385118055932849082200373801934266814965113401318154516161214551810924318596307428425326637156566851701988189278924286775968204627465227849023498807260126455703099862553535038377216404596223846660693174745490660657995894910041074681671729524939220842907412725891492103
+e: 65537
+```
+
+Note that the exact values of `c`, `n`, and `e` can change.
+
+We can use the following Python script to decrypt the message:
+
+```python3
+#!/usr/bin/env python3
+  
+from functools import reduce
+from Crypto.Util.number import inverse
+
+c= 928578955028473644356789381666024062722034323228797183377346332180897385665794462100512294120125788070453011950197291403579469313249177592508136324909989197132327350914252857799764603999027550303640977582887744877827400516692953369103601617550021677081387344442157290361933817649607439353527340724900261160739911528641194691399315963422884183
+n = 43427803384841675741795294286614281293038074243773627102620871168909551143168385118055932849082200373801934266814965113401318154516161214551810924318596307428425326637156566851701988189278924286775968204627465227849023498807260126455703099862553535038377216404596223846660693174745490660657995894910041074681671729524939220842907412725891492103
+e = 65537
+
+# Normal factorization is too slow
+# Use website https://www.alpertron.com.ar/ECM.HTM
+# facrtors below
+factors = "8623 800013 × 8975 373863 × 9724 224229 × 9938 028509 × 10290 072713 × 10328 337413 × 10370 395489 × 10651 523033 × 10935 315851 × 11033 775793 × 11477 881169 × 12099 578609 × 12249 947209 × 12329 922797 × 12844 488721 × 12974 946793 × 13175 172481 × 13304 314817 × 13364 114299 × 13415 341447 × 14290 992883 × 14353 035209 × 14391 318289 × 14474 135807 × 14541 982717 × 14723 432513 × 14798 973337 × 15042 208169 × 15319 042603 × 15685 462669 × 16061 060441 × 16566 262627 × 16771 550063 × 17085 756097"
+
+factors = list(map(lambda s: int(s), factors.replace(' ', '').split("×")))
+
+tot = reduce(lambda rst, f: rst * (f - 1), factors, 1)
+d = inverse(e, tot)
+
+pt = pow(c, d, n)
+pt = format(pt, 'x')
+pt = [chr(int(pt[i:i+2], 16)) for i in range(0, len(pt), 2)]
+pt = "".join(pt)
+
+print(pt)
+
+# => picoCTF{too_many_fact0rs_8024768}
+```
