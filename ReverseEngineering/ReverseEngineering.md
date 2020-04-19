@@ -515,13 +515,13 @@ print(flag)
 
 Where do droid logs go. Check out this file. You can also find the file in `/problems/droids0_0_205f7b4a3b23490adffddfcfc45a2ca3`.
 
-FLAG: `picoCTF{com.hellocmu.picoctf}`
+FLAG: `picoCTF{a.moose.once.bit.my.sister}`
 
-Use Android Studio to open the `zero.apk` file and find the flag.
+Use Android Studio to open the `zero.apk` file (profile and debug) and run the application. In logcat, we can find the following record:
 
-
-
-???????????????????????????????????????//
+```text
+2020-04-19 15:48:08.220 4856-4856/com.hellocmu.picoctf I/PICO: picoCTF{a.moose.once.bit.my.sister}
+```
 
 ### vault-door-5 (300 points)
 
