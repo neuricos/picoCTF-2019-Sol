@@ -863,3 +863,40 @@ print(pt)
 
 # => picoCTF{too_many_fact0rs_8024768}
 ```
+
+### john_pollard (500 points)
+
+Sometimes RSA certificates are breakable.
+
+FLAG: `picoCTF{73176001,67867967}`
+
+The certificate is as follows:
+
+```text
+-----BEGIN CERTIFICATE-----
+MIIB6zCB1AICMDkwDQYJKoZIhvcNAQECBQAwEjEQMA4GA1UEAxMHUGljb0NURjAe
+Fw0xOTA3MDgwNzIxMThaFw0xOTA2MjYxNzM0MzhaMGcxEDAOBgNVBAsTB1BpY29D
+VEYxEDAOBgNVBAoTB1BpY29DVEYxEDAOBgNVBAcTB1BpY29DVEYxEDAOBgNVBAgT
+B1BpY29DVEYxCzAJBgNVBAYTAlVTMRAwDgYDVQQDEwdQaWNvQ1RGMCIwDQYJKoZI
+hvcNAQEBBQADEQAwDgIHEaTUUhKxfwIDAQABMA0GCSqGSIb3DQEBAgUAA4IBAQAH
+al1hMsGeBb3rd/Oq+7uDguueopOvDC864hrpdGubgtjv/hrIsph7FtxM2B4rkkyA
+eIV708y31HIplCLruxFdspqvfGvLsCynkYfsY70i6I/dOA6l4Qq/NdmkPDx7edqO
+T/zK4jhnRafebqJucXFH8Ak+G6ASNRWhKfFZJTWj5CoyTMIutLU9lDiTXng3rDU1
+BhXg04ei1jvAf0UrtpeOA6jUyeCLaKDFRbrOm35xI79r28yO8ng1UAzTRclvkORt
+b8LMxw7e+vdIntBGqf7T25PLn/MycGPPvNXyIsTzvvY/MXXJHnAqpI5DlqwzbRHz
+q16/S1WLvzg4PsElmv1f
+-----END CERTIFICATE-----
+
+```
+
+Use the following Bash script to generate the flag:
+
+```bash
+#!/bin/bash
+
+openssl x509 -text -pubkey -noout -in cert > key.pub
+modulus=$(openssl rsa -text -pubin -in key.pub 2>/dev/null | grep Modulus | awk '{ print $2 }')
+curl "http://factordb.com/api/index.php?query=${modulus}" --silent | python3 -c 'import sys, json; factors = json.load(sys.stdin)["factors"]; q, p = factors[0][0], factors[1][0]; print("picoCTF{%s,%s}" % (p, q))'
+```
+
+Note that we can use FactorDB API to factorize the modulus to acquire the flag.
