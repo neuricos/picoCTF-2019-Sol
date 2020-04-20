@@ -1305,6 +1305,8 @@ Congrats! Here is the flag.txt!
 picoCTF{Hasten. Hurry. Ferrociously Speedy. #1dc758f2}
 ```
 
+One thing to notice is that the target program would reject the answer if the answer is too big. This may be related to how the program handles integers.
+
 ### droids3 (450 points)
 
 Find the pass, get the flag. Check out this file. You can also find the file in `/problems/droids3_0_b475775d8018b2a030a38c40e3b0e25c`.
@@ -1423,5 +1425,3 @@ deepzero@localhost $ java -jar uber-apk-signer-1.1.0.jar -apk three.apk
 ```
 
 Now, we can follow the same procedure and use Android Studio to open file and see the flag.
-
-One thing to notice is that the target program would reject the answer if the answer is too big. This may be related to how the program handles integers.
