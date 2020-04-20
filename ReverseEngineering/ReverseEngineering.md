@@ -962,3 +962,235 @@ $ find . -type f | xargs cat | grep password
 ```
 
 Hence, we know that the password is `opossum`. Fill that in and we can see the flag is `picoCTF{pining.for.the.fjords}`.
+
+### asm4 (400 points)
+
+What will `asm4("picoCTF_376ee")` return? Submit the flag as a hexadecimal value (starting with `'0x'`). NOTE: Your submission for this question will NOT be in the normal flag format. Source located in the directory at `/problems/asm4_2_0932017a5f5efe2bc813afd0fe0603aa`.
+
+FLAG: ``
+
+
+
+Follow the same procedure as we did in `asm3` and create the following `main.c` file:
+
+```c
+#include <stdio.h>
+
+int asm4(char *);
+
+int main()
+{
+    printf("0x%x\n", asm4("picoCTF_376ee"));
+    return 0;
+}
+```
+
+Also, modify `asm4.S` to be the following:
+
+```asm
+.intel_syntax noprefix
+.global asm4
+
+asm4:
+    push   ebp
+    mov    ebp,esp
+    push   ebx
+    sub    esp,0x10
+    mov    DWORD PTR [ebp-0x10],0x25c
+    mov    DWORD PTR [ebp-0xc],0x0
+    jmp    _asm4_27
+_asm4_23:
+    add    DWORD PTR [ebp-0xc],0x1
+_asm4_27:
+    mov    edx,DWORD PTR [ebp-0xc]
+    mov    eax,DWORD PTR [ebp+0x8]
+    add    eax,edx
+    movzx  eax,BYTE PTR [eax]
+    test   al,al
+    jne    _asm4_23
+    mov    DWORD PTR [ebp-0x8],0x1
+    jmp    _asm4_138
+_asm4_51:
+    mov    edx,DWORD PTR [ebp-0x8]
+    mov    eax,DWORD PTR [ebp+0x8]
+    add    eax,edx
+    movzx  eax,BYTE PTR [eax]
+    movsx  edx,al
+    mov    eax,DWORD PTR [ebp-0x8]
+    lea    ecx,[eax-0x1]
+    mov    eax,DWORD PTR [ebp+0x8]
+    add    eax,ecx
+    movzx  eax,BYTE PTR [eax]
+    movsx  eax,al
+    sub    edx,eax
+    mov    eax,edx
+    mov    edx,eax
+    mov    eax,DWORD PTR [ebp-0x10]
+    lea    ebx,[edx+eax*1]
+    mov    eax,DWORD PTR [ebp-0x8]
+    lea    edx,[eax+0x1]
+    mov    eax,DWORD PTR [ebp+0x8]
+    add    eax,edx
+    movzx  eax,BYTE PTR [eax]
+    movsx  edx,al
+    mov    ecx,DWORD PTR [ebp-0x8]
+    mov    eax,DWORD PTR [ebp+0x8]
+    add    eax,ecx
+    movzx  eax,BYTE PTR [eax]
+    movsx  eax,al
+    sub    edx,eax
+    mov    eax,edx
+    add    eax,ebx
+    mov    DWORD PTR [ebp-0x10],eax
+    add    DWORD PTR [ebp-0x8],0x1
+_asm4_138:
+    mov    eax,DWORD PTR [ebp-0xc]
+    sub    eax,0x1
+    cmp    DWORD PTR [ebp-0x8],eax
+    jl     _asm4_51
+    mov    eax,DWORD PTR [ebp-0x10]
+    add    esp,0x10
+    pop    ebx
+    pop    ebp
+    ret
+```
+
+Create the following Bash script to run the program:
+
+```bash
+#!/bin/bash
+
+gcc -masm=intel -m32 asm4.S -c -o asm4.o
+gcc -m32 main.c -c -o main.o
+gcc -m32 asm4.o main.o -o main
+./main
+# => 0x24d
+```
+
+### droids2 (400 points)
+
+Find the pass, get the flag. Check out this file. You can also find the file in `/problems/droids2_0_bf474794b5a228db3498ba3198db54d7`.
+
+FLAG: `picoCTF{what.is.your.favourite.colour}`
+
+Unlike the previous droids, we cannot directly find the password. We can use `jadx` to decompile the application. Inside `/Users/mikoto/Desktop/picoCTF-2019-Sol/ReverseEngineering/droid2/two/sources/com/hellocmu/picoctf`, we can find `FlagstaffHill.java`:
+
+```java
+package com.hellocmu.picoctf;
+
+import android.content.Context;
+
+public class FlagstaffHill {
+    public static native String sesame(String str);
+
+    public static String getFlag(String input, Context ctx) {
+        String[] witches = {"weatherwax", "ogg", "garlick", "nitt", "aching", "dismass"};
+        int second = 3 - 3;
+        int third = (3 / 3) + second;
+        int fourth = (third + third) - second;
+        int fifth = 3 + fourth;
+        if (input.equals("".concat(witches[fifth]).concat(".").concat(witches[third]).concat(".").concat(witches[second]).concat(".").concat(witches[(fifth + second) - third]).concat(".").concat(witches[3]).concat(".").concat(witches[fourth]))) {
+            return sesame(input);
+        }
+        return "NOPE";
+    }
+}
+```
+
+Following the code, we know that the password is `dismass.ogg.weatherwax.aching.nitt.garlick`.
+
+If we input the password, we can see the flag is `picoCTF{what.is.your.favourite.colour}`.
+
+### vault-door-7 (400 points)
+
+This vault uses bit shifts to convert a password string into an array of integers. Hurry, agent, we are running out of time to stop Dr. Evil's nefarious plans! The source code for this vault is here: `VaultDoor7.java`
+
+FLAG: `picoCTF{A_b1t_0f_b1t_sh1fTiNg_d79dd25ce3}`
+
+```java
+import java.util.*;
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.*;
+
+class VaultDoor7 {
+    public static void main(String args[]) {
+        VaultDoor7 vaultDoor = new VaultDoor7();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter vault password: ");
+        String userInput = scanner.next();
+        String input = userInput.substring("picoCTF{".length(), userInput.length() - 1);
+        if (vaultDoor.checkPassword(input)) {
+            System.out.println("Access granted.");
+        } else {
+            System.out.println("Access denied!");
+        }
+    }
+
+    // Each character can be represented as a byte value using its
+    // ASCII encoding. Each byte contains 8 bits, and an int contains
+    // 32 bits, so we can "pack" 4 bytes into a single int. Here's an
+    // example: if the hex string is "01ab", then those can be
+    // represented as the bytes {0x30, 0x31, 0x61, 0x62}. When those
+    // bytes are represented as binary, they are:
+    //
+    // 0x30: 00110000
+    // 0x31: 00110001
+    // 0x61: 01100001
+    // 0x62: 01100010
+    //
+    // If we put those 4 binary numbers end to end, we end up with 32
+    // bits that can be interpreted as an int.
+    //
+    // 00110000001100010110000101100010 -> 808542562
+    //
+    // Since 4 chars can be represented as 1 int, the 32 character password can
+    // be represented as an array of 8 ints.
+    //
+    // - Minion #7816
+    public int[] passwordToIntArray(String hex) {
+        int[] x = new int[8];
+        byte[] hexBytes = hex.getBytes();
+        for (int i = 0; i < 8; i++) {
+            x[i] = hexBytes[i * 4] << 24 |
+                hexBytes[i * 4 + 1] << 16 |
+                hexBytes[i * 4 + 2] << 8 |
+                hexBytes[i * 4 + 3];
+        }
+        return x;
+    }
+
+    public boolean checkPassword(String password) {
+        if (password.length() != 32) {
+            return false;
+        }
+        int[] x = passwordToIntArray(password);
+        return x[0] == 1096770097 &&
+            x[1] == 1952395366 &&
+            x[2] == 1600270708 &&
+            x[3] == 1601398833 &&
+            x[4] == 1716808014 &&
+            x[5] == 1734304823 &&
+            x[6] == 962880562 &&
+            x[7] == 895706419;
+    }
+}
+```
+
+We can write the following Python script to reverse the procedure and reconstruct the flag:
+
+```python3
+#!/usr/bin/env python3
+
+xs = [1096770097, 1952395366, 1600270708, 1601398833, 1716808014, 1734304823, 962880562, 895706419]
+flag = ""
+for x  in xs:
+    ss = [8 * i for i in reversed(range(4))]
+    ms = [0xFF << s for s in ss]
+    vs = [(ms[i] & x) >> ss[i] for i in range(len(ss))]
+    us = [chr(int(hex(v), 16)) for v in vs]
+    flag += "".join(us)
+print(flag)
+
+# => A_b1t_0f_b1t_sh1fTiNg_d79dd25ce3
+```
