@@ -1194,3 +1194,234 @@ print(flag)
 
 # => A_b1t_0f_b1t_sh1fTiNg_d79dd25ce3
 ```
+
+### Time's Up, Again! (450 points)
+
+Previously you solved things fast. Now you've got to go faster. Much faster. Can you solve *this one* before time runs out? times-up-again, located in the directory at `/problems/time-s-up--again-_3_f7219b295d1ce306013aea2d0ab82c27`.
+
+FLAG: `picoCTF{Hasten. Hurry. Ferrociously Speedy. #1dc758f2}`
+
+Following the same idea as the previous `times-up` problem, we can use `strace` to see the how long the timer would alarm before we input the answer.
+
+```text
+deepzero@localhost:~/picoCTF$ strace ./times-up-again 
+execve("./times-up-again", ["./times-up-again"], [/* 17 vars */]) = 0
+brk(0)                                  = 0x555555759000
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ffff7ff9000
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+open("/etc/ld.so.cache", O_RDONLY)      = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=102896, ...}) = 0
+mmap(NULL, 102896, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7ffff7fdf000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\300\357\1\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=1607696, ...}) = 0
+mmap(NULL, 3721272, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7ffff7a50000
+mprotect(0x7ffff7bd4000, 2093056, PROT_NONE) = 0
+mmap(0x7ffff7dd3000, 20480, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x183000) = 0x7ffff7dd3000
+mmap(0x7ffff7dd8000, 18488, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7ffff7dd8000
+close(3)                                = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ffff7fde000
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ffff7fdd000
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ffff7fdc000
+arch_prctl(ARCH_SET_FS, 0x7ffff7fdd700) = 0
+mprotect(0x7ffff7dd3000, 16384, PROT_READ) = 0
+mprotect(0x555555755000, 4096, PROT_READ) = 0
+mprotect(0x7ffff7ffc000, 4096, PROT_READ) = 0
+munmap(0x7ffff7fdf000, 102896)          = 0
+rt_sigaction(SIGALRM, {SIG_DFL, [ALRM], SA_RESTORER|SA_RESTART, 0x7ffff7a821a0}, {SIG_DFL, [], 0}, 8) = 0
+time(NULL)                              = 1587425845
+brk(0)                                  = 0x555555759000
+brk(0x55555577a000)                     = 0x55555577a000
+open("/dev/urandom", O_RDONLY)          = 3
+fstat(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 152), ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ffff7ff8000
+fstat(3, {st_mode=S_IFCHR|0666, st_rdev=makedev(1, 9), ...}) = 0
+ioctl(3, SNDCTL_TMR_TIMEBASE or TCGETS, 0x7fffffffe2b0) = -1 EINVAL (Invalid argument)
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ffff7ff7000
+read(3, "\204\340\223\365\3756A\177\337\262s'\26D\272\310\f\245\7\216\0057\274\\\232\231\373\315\t\372`\352"..., 4096) = 4096
+write(1, "Challenge: (((((-174858108) + (6"..., 277Challenge: (((((-174858108) + (661893855)) - ((-1912101620) + (-839149158))) * (((-1981753746) * (465526088)) + ((751655980) - (1727566328)))) * ((((-209240140) - (753877555)) - ((-270236583) * (-1363945212))) - (((-1521559377) - (49330417)) + ((1278820237) * (-579390559)))))
+) = 277
+write(1, "Setting alarm...\n", 17Setting alarm...
+)      = 17
+setitimer(ITIMER_REAL, {it_interval={0, 0}, it_value={0, 200}}, {it_interval={0, 0}, it_value={0, 0}}) = 0
+fstat(0, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 152), ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ffff7ff6000
+write(1, "Solution? ", 10)              = ? ERESTARTSYS (To be restarted)
+--- SIGALRM (Alarm clock) @ 0 (0) ---
++++ killed by SIGALRM +++
+Alarm clock
+```
+
+As we can see, the program gives 200 us to solve the problem, which is much shorter than the previous time. Although there is way to write a C program to run the target program by reading from and writing to forked process through pipelines, it takes too much code. Hence, I choose to adopt a way that I have found online. That is, we can block the `ALARM` signal to slow down the target program.
+
+```c
+#include <signal.h>
+#include <unistd.h>
+
+int main(){
+    sigset_t sigs;
+
+    sigemptyset(&sigs);
+    sigaddset(&sigs, SIGALRM);
+    sigprocmask(SIG_BLOCK, &sigs, 0);
+
+    execl("./times-up-again", "times-up-again", NULL);
+}
+```
+
+We can compile the program with the following command:
+
+```bash
+deepzero@localhost $ gcc -Wall -g -std=c11 -D_POSIX_SOURCE main.c -o main
+```
+
+If we run the program, we would see the following:
+
+```bash
+deepzero@localhost:/problems/time-s-up--again-_3_f7219b295d1ce306013aea2d0ab82c27$ ~/main
+Challenge: (((((591354935) + (189091348)) + ((-1699811656) - (1409154097))) - (((1836108634) + (1664254202)) + ((-1124524879) + (-1453163354)))) - ((((1836092023) + (1531548464)) - ((-303509607) - (-2077750124))) - ((((1980893543) + (1021617250)) + ((-473606947) + (792896657))) + ((-1214926167) - (-1482717717)))))
+Setting alarm...
+Solution?
+```
+
+Copy the expression to Python interpreter and get the answer.
+
+```text
+>>> (((((591354935) + (189091348)) + ((-1699811656) - (1409154097))) - (((1836108634) + (1664254202)) + ((-1124524879) + (-1453163354)))) - ((((1836092023) + (1531548464)) - ((-303509607) - (-2077750124))) - ((((1980893543) + (1021617250)) + ((-473606947) + (792896657))) + ((-1214926167) - (-1482717717)))))
+-1255001990
+```
+
+Put the answer back to the console.
+
+```bash
+deepzero@localhost:/problems/time-s-up--again-_3_f7219b295d1ce306013aea2d0ab82c27$ ~/main
+Challenge: (((((591354935) + (189091348)) + ((-1699811656) - (1409154097))) - (((1836108634) + (1664254202)) + ((-1124524879) + (-1453163354)))) - ((((1836092023) + (1531548464)) - ((-303509607) - (-2077750124))) - ((((1980893543) + (1021617250)) + ((-473606947) + (792896657))) + ((-1214926167) - (-1482717717)))))
+Setting alarm...
+Solution? -1255001990
+Congrats! Here is the flag.txt!
+picoCTF{Hasten. Hurry. Ferrociously Speedy. #1dc758f2}
+```
+
+### droids3 (450 points)
+
+Find the pass, get the flag. Check out this file. You can also find the file in `/problems/droids3_0_b475775d8018b2a030a38c40e3b0e25c`.
+
+FLAG: `picoCTF{tis.but.a.scratch}`
+
+First use `jadx` to decompile the `apk` file and read `three/sources/com/hellocmu/picoctf/FlagstaffHill.java`:
+
+```java
+package com.hellocmu.picoctf;
+
+import android.content.Context;
+
+public class FlagstaffHill {
+    public static native String cilantro(String str);
+
+    public static String nope(String input) {
+        return "don't wanna";
+    }
+
+    public static String yep(String input) {
+        return cilantro(input);
+    }
+
+    public static String getFlag(String input, Context ctx) {
+        return nope(input);
+    }
+}
+```
+
+As you can see, `getFlag` would always return `nope(input)`. What we need to do is to change nope to `yep`. That means, we need to modify the file and recompile the files to `apk`.
+
+Use `apktool` to dissemble `three.apk` and open `three/smali/com/hellocmu/picoctf/FlagstaffHill.smali`:
+
+```text
+.class public Lcom/hellocmu/picoctf/FlagstaffHill;
+.super Ljava/lang/Object;
+.source "FlagstaffHill.java"
+
+
+# direct methods
+.method public constructor <init>()V
+    .locals 0
+
+    .line 6
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+.method public static native cilantro(Ljava/lang/String;)Ljava/lang/String;
+.end method
+
+.method public static getFlag(Ljava/lang/String;Landroid/content/Context;)Ljava/lang/String;
+    .locals 1
+    .param p0, "input"    # Ljava/lang/String;
+    .param p1, "ctx"    # Landroid/content/Context;
+
+    .line 19
+    invoke-static {p0}, Lcom/hellocmu/picoctf/FlagstaffHill;->nope(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 20
+    .local v0, "flag":Ljava/lang/String;
+    return-object v0
+.end method
+
+.method public static nope(Ljava/lang/String;)Ljava/lang/String;
+    .locals 1
+    .param p0, "input"    # Ljava/lang/String;
+
+    .line 11
+    const-string v0, "don\'t wanna"
+
+    return-object v0
+.end method
+
+.method public static yep(Ljava/lang/String;)Ljava/lang/String;
+    .locals 1
+    .param p0, "input"    # Ljava/lang/String;
+
+    .line 15
+    invoke-static {p0}, Lcom/hellocmu/picoctf/FlagstaffHill;->cilantro(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+```
+
+Change
+
+```text
+invoke-static {p0}, Lcom/hellocmu/picoctf/FlagstaffHill;->nope(Ljava/lang/String;)Ljava/lang/String;
+```
+
+to
+
+```text
+invoke-static {p0}, Lcom/hellocmu/picoctf/FlagstaffHill;->yep(Ljava/lang/String;)Ljava/lang/String;
+```
+
+Then, use `apktool` to make the files back to `three.apk` as follows:
+
+```bash
+deepzero@localhost $ apktool b three -o three.apk
+```
+
+Notice that we cannot directly install `three.apk`. If we do that, we will see error: `INSTALL_PARSE_FAILED_NO_CERTIFICATES`.
+
+We can use `uber-apk-signer.jar` to sign the `apk` file:
+
+```bash
+deepzero@localhost $ java -jar uber-apk-signer-1.1.0.jar -apk three.apk
+```
+
+Now, we can follow the same procedure and use Android Studio to open file and see the flag.
+
+One thing to notice is that the target program would reject the answer if the answer is too big. This may be related to how the program handles integers.
