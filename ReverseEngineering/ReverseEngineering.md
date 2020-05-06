@@ -967,9 +967,7 @@ Hence, we know that the password is `opossum`. Fill that in and we can see the f
 
 What will `asm4("picoCTF_376ee")` return? Submit the flag as a hexadecimal value (starting with `'0x'`). NOTE: Your submission for this question will NOT be in the normal flag format. Source located in the directory at `/problems/asm4_2_0932017a5f5efe2bc813afd0fe0603aa`.
 
-FLAG: ``
-
-
+FLAG: `0x24d`
 
 Follow the same procedure as we did in `asm3` and create the following `main.c` file:
 
